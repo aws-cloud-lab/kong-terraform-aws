@@ -2,6 +2,8 @@
 variable "vpc" {
   description = "VPC Name for the AWS account and region specified"
   type        = string
+  
+  default = "private"
 }
 
 variable "subnet_tag" {
