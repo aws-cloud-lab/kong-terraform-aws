@@ -1,6 +1,7 @@
 # kong-terraform-aws
 Kong API Portal Installation Using Terraform
 
+openssl pkcs7 -print_certs -in certificatename.p7b -out certificatename.pem
 
 *********************main.tf***********************************
 provider "aws" {
