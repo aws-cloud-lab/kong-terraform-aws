@@ -11,18 +11,18 @@ data "aws_iam_policy_document" "kong-ssm" {
 
   statement {
     actions   = ["kms:Decrypt"]
-    resources = [aws_kms_alias.kongDev.target_key_arn]
+    resources = [aws_kms_alias.kong.target_key_arn]
   }
 }
 
 resource "aws_iam_role_policy" "kong-ssm" {
   name = format("%s-%s-ssm", var.service, var.environment)
-  role = aws_iam_role.kongDev.id
+  role = aws_iam_role.kong.id
 
-  policy = data.aws_iam_policy_document.kongDev-ssm.json
+  policy = data.aws_iam_policy_document.kong-ssm.json
 }
 
-data "aws_iam_policy_document" "kongDev" {
+data "aws_iam_policy_document" "kong" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -33,12 +33,12 @@ data "aws_iam_policy_document" "kongDev" {
   }
 }
 
-resource "aws_iam_role" "kongDev" {
+resource "aws_iam_role" "kong" {
   name               = format("%s-%s", var.service, var.environment)
-  assume_role_policy = data.aws_iam_policy_document.kongDev.json
+  assume_role_policy = data.aws_iam_policy_document.kong.json
 }
 
-resource "aws_iam_instance_profile" "kongDev" {
+resource "aws_iam_instance_profile" "kong" {
   name = format("%s-%s", var.service, var.environment)
-  role = aws_iam_role.kongDev.id
+  role = aws_iam_role.kong.id
 }
